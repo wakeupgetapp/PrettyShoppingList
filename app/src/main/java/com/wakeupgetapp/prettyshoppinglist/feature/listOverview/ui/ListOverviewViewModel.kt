@@ -14,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ListOverviewViewModel @Inject constructor(
     fetchListOfShoppingListsUseCase: FetchListOfShoppingListsUseCase,
+   // createNewShoppingListUseCase: CreateNewShoppingListUseCase,
     private val repository: ShoppingListRepository
 ) : ViewModel() {
 
@@ -45,25 +46,4 @@ class ListOverviewViewModel @Inject constructor(
     }
 
 
-
-//    suspend fun setListEntryStateInitial(shoppingListEntry: ShoppingListEntry){
-//        repository.updateShoppingListEntryState(shoppingListEntry.id, ShoppingListEntryState.INITIAL)
-//    }
-//
-//    suspend fun setListEntryStateDone(shoppingListEntry: ShoppingListEntry){
-//        repository.updateShoppingListEntryState(shoppingListEntry.id, ShoppingListEntryState.DURING)
-//        delay(3000)
-//        if (shoppingListEntry.state != ShoppingListEntryState.INITIAL){
-//            shoppingListEntry.updateShoppingListEntryState(shoppingListEntry, ShoppingListEntryState.DONE)
-//        }
-//    }
-//
-//    suspend fun updateListEntry(shoppingListEntry: ShoppingListEntry){
-//        if(state == ShoppingListEntryState.INITIAL){
-//            repository.updateShoppingListEntryState(shoppingListEntry.id, state)
-//        }
-//        else if (state == ShoppingListEntryState.DURING){
-//
-//        }
-//    }
 }

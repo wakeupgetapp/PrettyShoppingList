@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
+import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
+import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntryState
 import com.wakeupgetapp.prettyshoppinglist.data.repository.ShoppingListRepository
 import com.wakeupgetapp.prettyshoppinglist.feature.shoppingList.domain.FetchShoppingListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,29 +35,39 @@ class ShoppingListViewModel @Inject constructor(
             initialValue = ShoppingListState.Loading,
         )
 
-    private val updateShoppingListMutex = Mutex()
 
-    fun updateShoppingListTitle(title: String) {
+    fun updateShoppingListTitle(title: String) =
         viewModelScope.launch {
-            val shoppingList = shoppingListState.value as? ShoppingListState.Success ?: return@launch
-            val newShoppingList = shoppingList.shoppingList.copy(title = title)
-
-            updateShoppingListMutex.withLock {
-                repository.updateShoppingList(newShoppingList)
+            (shoppingListState.value as? ShoppingListState.Success)?.let { shoppingListState ->
+                repository.updateShoppingList(shoppingListState.shoppingList.copy(title = title))
             }
         }
-    }
 
 
-    fun updateShoppingListDate(date: String) {
+    fun updateShoppingListDate(date: String) =
         viewModelScope.launch {
-            if (shoppingListState.value is ShoppingListState.Success) {
-                val newShoppingList =
-                    (shoppingListState.value as ShoppingListState.Success).shoppingList.copy(date = date)
-                repository.updateShoppingList(newShoppingList)
+            (shoppingListState.value as? ShoppingListState.Success)?.let { shoppingListState ->
+                repository.updateShoppingList(shoppingListState.shoppingList.copy(date = date))
             }
         }
-    }
 
+
+    fun addNewEntry(name: String, category: String) =
+        viewModelScope.launch {
+            (shoppingListState.value as? ShoppingListState.Success)?.let { shoppingListState ->
+                val mutableShoppingList = shoppingListState.shoppingList.entriesList.toMutableList()
+                mutableShoppingList.add(
+                    ShoppingListEntry(
+                        name = name,
+                        category = category,
+                        state = ShoppingListEntryState.INITIAL
+                    )
+                )
+                repository.updateShoppingList(
+                    shoppingListState.shoppingList.copy(entriesList = mutableShoppingList)
+                )
+            }
+
+        }
 
 }
