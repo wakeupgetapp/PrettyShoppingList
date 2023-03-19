@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface ShoppingListDataSource {
     fun getShoppingLists(): Flow<List<ShoppingListWithEntries>>
+    fun getShoppingList(id: Long): Flow<ShoppingListEntity>
     suspend fun addShoppingList(shoppingList: ShoppingListEntity): Long
     fun deleteShoppingList(shoppingList: ShoppingListEntity)
+
+    suspend fun updateShoppingList(shoppingList: ShoppingListEntity)
 }

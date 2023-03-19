@@ -15,8 +15,17 @@ class ShoppingListDataSourceImpl @Inject constructor(
         return shoppingListDao.insertShoppingList(shoppingList)
     }
 
+    override fun getShoppingList(id: Long): Flow<ShoppingListEntity> {
+        return shoppingListDao.getShoppingListById(id)
+    }
+
     override fun deleteShoppingList(shoppingList: ShoppingListEntity) {
         shoppingListDao.deleteShoppingList(shoppingList)
     }
+
+    override suspend fun updateShoppingList(shoppingList: ShoppingListEntity) {
+        shoppingListDao.updateShoppingList(shoppingList)
+    }
+
 
 }

@@ -19,6 +19,12 @@ interface ShoppingListDao {
     @Query("SELECT * FROM ShoppingListEntity")
     fun getShoppingLists(): Flow<List<ShoppingListWithEntries>>
 
+    @Query("SELECT * FROM ShoppingListEntity WHERE id=:id")
+    fun getShoppingListById(id: Long): Flow<ShoppingListEntity>
+
     @Delete
     fun deleteShoppingList(shoppingList: ShoppingListEntity)
+
+    @Update
+    suspend fun updateShoppingList(shoppingList: ShoppingListEntity)
 }

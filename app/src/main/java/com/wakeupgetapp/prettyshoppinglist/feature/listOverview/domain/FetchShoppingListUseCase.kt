@@ -6,7 +6,7 @@ import com.wakeupgetapp.prettyshoppinglist.data.repository.ShoppingListRepositor
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class FetchShoppingListUseCase @Inject constructor(
+class FetchListOfShoppingListsUseCase @Inject constructor(
     private val shoppingListRepository: ShoppingListRepository
 ): ()-> Flow<List<ShoppingList>> {
     override fun invoke(): Flow<List<ShoppingList>> {
