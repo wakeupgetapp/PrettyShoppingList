@@ -52,22 +52,14 @@ class ShoppingListViewModel @Inject constructor(
         }
 
 
-    fun addNewEntry(name: String, category: String) =
+    fun addNewEntry(name: String, category: Long) =
         viewModelScope.launch {
-            (shoppingListState.value as? ShoppingListState.Success)?.let { shoppingListState ->
-//                val mutableShoppingList = shoppingListState.shoppingList.entries.toMutableList()
-//                mutableShoppingList.add(
-//                    ShoppingListEntry(
-//                        name = name,
-//                        category = category,
-//                        state = ShoppingListEntryState.INITIAL
-//                    )
-//                )
-//                repository.updateShoppingList(
-//                    shoppingListState.shoppingList.copy(entriesList = mutableShoppingList)
-//                )
-            }
-
+            repository.addShoppingListEntry(
+                ShoppingListEntry(
+                    name = name,
+                    state = ShoppingListEntryState.INITIAL,
+                    shoppingListCategoryId = category
+                )
+            )
         }
-
 }

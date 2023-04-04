@@ -1,10 +1,7 @@
 package com.wakeupgetapp.prettyshoppinglist.data.repository
 
 import com.wakeupgetapp.prettyshoppinglist.data.local.datasource.ShoppingListDataSource
-import com.wakeupgetapp.prettyshoppinglist.data.mapper.toShoppingList
-import com.wakeupgetapp.prettyshoppinglist.data.mapper.toShoppingListCategoryEntity
-import com.wakeupgetapp.prettyshoppinglist.data.mapper.toShoppingListEntity
-import com.wakeupgetapp.prettyshoppinglist.data.mapper.toShoppingListEntryEntity
+import com.wakeupgetapp.prettyshoppinglist.data.mapper.*
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListCategory
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
@@ -19,27 +16,26 @@ class ShoppingListRepositoryImpl @Inject constructor(
         localShoppingListDataSource.getShoppingLists().map { it -> it.map { it.toShoppingList() } }
 
     override fun getShoppingList(id: Long): Flow<ShoppingList> =
-        localShoppingListDataSource.getShoppingList(id)
-            .map { it.toShoppingList() }
+        localShoppingListDataSource.getShoppingList(id).map { it.toShoppingList() }
 
-    override suspend fun addShoppingList(shoppingList: ShoppingList): Long =
-        localShoppingListDataSource.addShoppingList(shoppingList.toShoppingListEntity())
-
-
-    override suspend fun addShoppingListCategory(shoppingListCategory: ShoppingListCategory): Long =
-        localShoppingListDataSource.addShoppingListCategory(shoppingListCategory.toShoppingListCategoryEntity())
+override suspend fun addShoppingList(shoppingList: ShoppingList): Long =
+    localShoppingListDataSource.addShoppingList(shoppingList.toShoppingListEntity())
 
 
-    override suspend fun addShoppingListEntry(shoppingListEntry: ShoppingListEntry): Long =
-        localShoppingListDataSource.addShoppingListEntry(shoppingListEntry.toShoppingListEntryEntity())
+override suspend fun addShoppingListCategory(shoppingListCategory: ShoppingListCategory): Long =
+    localShoppingListDataSource.addShoppingListCategory(shoppingListCategory.toShoppingListCategoryEntity())
 
 
-    override fun deleteShoppingList(shoppingList: ShoppingList) {
-        localShoppingListDataSource.deleteShoppingList(shoppingList.toShoppingListEntity())
-    }
+override suspend fun addShoppingListEntry(shoppingListEntry: ShoppingListEntry): Long =
+    localShoppingListDataSource.addShoppingListEntry(shoppingListEntry.toShoppingListEntryEntity())
 
-    override suspend fun updateShoppingList(shoppingList: ShoppingList) {
-        localShoppingListDataSource.updateShoppingList(shoppingList.toShoppingListEntity())
-    }
+
+override fun deleteShoppingList(shoppingList: ShoppingList) {
+    localShoppingListDataSource.deleteShoppingList(shoppingList.toShoppingListEntity())
+}
+
+override suspend fun updateShoppingList(shoppingList: ShoppingList) {
+    localShoppingListDataSource.updateShoppingList(shoppingList.toShoppingListEntity())
+}
 
 }

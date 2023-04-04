@@ -1,8 +1,6 @@
 package com.wakeupgetapp.prettyshoppinglist.data.mapper
 
-import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListCategoryEntity
-import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListEntity
-import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListEntryEntity
+import com.wakeupgetapp.prettyshoppinglist.data.local.model.*
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListCategory
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
@@ -12,6 +10,24 @@ fun ShoppingListEntity.toShoppingList(): ShoppingList {
         id = id,
         title = title,
         date = date,
+    )
+}
+
+fun ShoppingListWithCategoriesAndEntries.toShoppingList(): ShoppingList {
+    return ShoppingList(
+        id = shoppingList.id,
+        title = shoppingList.title,
+        date = shoppingList.date,
+        categories = shoppingListCategories.map { it.toShoppingListCategories() }
+    )
+}
+
+fun ShoppingListCategoryWithEntries.toShoppingListCategories(): ShoppingListCategory {
+    return ShoppingListCategory(
+        id = shoppingListCategoryEntity.id,
+        name = shoppingListCategoryEntity.name,
+        shoppingListId = shoppingListCategoryEntity.shoppingListId,
+        entries = shoppingListEntries.map { it.toShoppingListEntry() }
     )
 }
 

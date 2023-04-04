@@ -4,7 +4,7 @@ import com.wakeupgetapp.prettyshoppinglist.data.local.dao.ShoppingListDao
 import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListCategoryEntity
 import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListEntity
 import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListEntryEntity
-import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListWithCategories
+import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListWithCategoriesAndEntries
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class ShoppingListDataSourceImpl @Inject constructor(
         return shoppingListDao.insertShoppingListEntry(shoppingListEntryEntity)
     }
 
-    override fun getShoppingList(id: Long): Flow<ShoppingListEntity> {
+    override fun getShoppingList(id: Long): Flow<ShoppingListWithCategoriesAndEntries> {
         return shoppingListDao.getShoppingListById(id)
     }
 

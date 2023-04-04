@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wakeupgetapp.prettyshoppinglist.component.textField.ShoppingListTitleTextField
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
+import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListCategory
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntryState
 import timber.log.Timber
@@ -24,7 +25,7 @@ fun ShoppingListScreen(
     shoppingListState: ShoppingListState,
     updateShoppingListTitle: (String) -> Unit,
     updateShoppingListDate: (String) -> Unit,
-    addNewEntry: (String, String) -> Unit
+    addNewEntry: (String, Long) -> Unit
 ) {
     if (shoppingListState is ShoppingListState.Success) {
         ShoppingListColumn(
@@ -45,38 +46,13 @@ fun ShoppingListScreen(
 }
 
 
-//@Composable
-//fun ShoppingListColumn(
-//    shoppingList: ShoppingList,
-//    updateShoppingListTitle: (String) -> Unit,
-//    updateShoppingListDate: (String) -> Unit,
-//    addNewEntry: (String, String) -> Unit
-//) {
-//    Column(modifier = Modifier.fillMaxSize()) {
-//        ShoppingListTitleTextField(
-//            text = shoppingList.title,
-//            onValueChange = updateShoppingListTitle
-//        )
-//        Text(text = shoppingList.date)
-//        shoppingList.entriesList.forEach {
-//            Row(
-//                Modifier
-//                    .fillMaxWidth()
-//                    .height(54.dp)) {
-//                Text(text = )
-//            }
-//        }
-//    }
-//
-//}
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ShoppingListColumn(
     shoppingList: ShoppingList,
     updateShoppingListTitle: (String) -> Unit,
     updateShoppingListDate: (String) -> Unit,
-    addNewEntry: (String, String) -> Unit
+    addNewEntry: (String, Long) -> Unit
 ) {
     Log.e("SHOPPING LIST CATEGORIES" ,shoppingList.categories.toString())
     Text(text = shoppingList.title)
@@ -94,10 +70,14 @@ fun ShoppingListColumn(
             }
             items(category.entries) { entry ->
                 ShoppingListEntryRow(entry = entry)
-                Button(onClick = { addNewEntry("pomczke", category.name) }) {
 
+            }
+            item {
+                Button(onClick = { addNewEntry("pomczek", category.id) }) {
+                    Text(text = "AMENO")
                 }
             }
+
 
         }
     }
