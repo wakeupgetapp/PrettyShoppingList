@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
+import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListCategory
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntryState
 import com.wakeupgetapp.prettyshoppinglist.data.repository.ShoppingListRepository
@@ -49,6 +50,16 @@ class ShoppingListViewModel @Inject constructor(
             (shoppingListState.value as? ShoppingListState.Success)?.let { shoppingListState ->
                 repository.updateShoppingList(shoppingListState.shoppingList.copy(date = date))
             }
+        }
+
+    fun addNewCategory(name: String) =
+        viewModelScope.launch {
+            repository.addShoppingListCategory(
+                ShoppingListCategory(
+                    name = name,
+                    shoppingListId = shoppingListId
+                )
+            )
         }
 
 

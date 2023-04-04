@@ -7,32 +7,33 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.wakeupgetapp.prettyshoppinglist.component.textField.ShoppingListTitleTextField
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
-import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListCategory
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntryState
-import timber.log.Timber
 
 @Composable
 fun ShoppingListScreen(
     shoppingListState: ShoppingListState,
     updateShoppingListTitle: (String) -> Unit,
     updateShoppingListDate: (String) -> Unit,
-    addNewEntry: (String, Long) -> Unit
+    addNewEntry: (String, Long) -> Unit,
+    addNewCategory: (String) -> Unit
 ) {
     if (shoppingListState is ShoppingListState.Success) {
         ShoppingListColumn(
             shoppingList = shoppingListState.shoppingList,
             updateShoppingListTitle = updateShoppingListTitle,
             updateShoppingListDate = updateShoppingListDate,
-            addNewEntry = addNewEntry
+            addNewEntry = addNewEntry,
+            addNewCategory = addNewCategory
         )
     } else {
         Box(
@@ -52,7 +53,8 @@ fun ShoppingListColumn(
     shoppingList: ShoppingList,
     updateShoppingListTitle: (String) -> Unit,
     updateShoppingListDate: (String) -> Unit,
-    addNewEntry: (String, Long) -> Unit
+    addNewEntry: (String, Long) -> Unit,
+    addNewCategory: (String) -> Unit
 ) {
     Log.e("SHOPPING LIST CATEGORIES" ,shoppingList.categories.toString())
     Text(text = shoppingList.title)
@@ -61,10 +63,10 @@ fun ShoppingListColumn(
             stickyHeader {
                 Text(
                     text = category.name.ifBlank { "bez kategorii" },
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colors.secondary)
+                        .background(MaterialTheme.colorScheme.secondary)
                         .padding(16.dp)
                 )
             }
@@ -77,9 +79,11 @@ fun ShoppingListColumn(
                     Text(text = "AMENO")
                 }
             }
-
-
         }
+
+    }
+    Button(onClick = { addNewCategory("Tomek") }) {
+        Text(text = "nowa kategoria yeye")
     }
 }
 
@@ -94,7 +98,7 @@ fun ShoppingListEntryRow(entry: ShoppingListEntry) {
     ) {
         Text(
             text = entry.name,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.displayMedium,
             modifier = Modifier.weight(1f)
         )
         when (entry.state) {

@@ -20,7 +20,8 @@ fun ShoppingListRoute(
         shoppingListState = shoppingListState,
         updateShoppingListTitle = viewModel::updateShoppingListTitle,
         updateShoppingListDate = viewModel::updateShoppingListDate,
-        addNewEntry = viewModel::addNewEntry
+        addNewEntry = viewModel::addNewEntry,
+        addNewCategory = viewModel::addNewCategory
     )
 
     
