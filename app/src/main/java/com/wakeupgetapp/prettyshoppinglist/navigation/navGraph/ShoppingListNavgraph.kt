@@ -6,6 +6,7 @@ import com.wakeupgetapp.prettyshoppinglist.feature.listOverview.ListOverviewRout
 import com.wakeupgetapp.prettyshoppinglist.feature.shoppingList.ShoppingListRoute
 import com.wakeupgetapp.prettyshoppinglist.navigation.NavRoutes
 import com.wakeupgetapp.prettyshoppinglist.navigation.PslScreens
+import timber.log.Timber
 
 fun NavGraphBuilder.shoppingListNavGraph(navController: NavController) {
 
@@ -16,6 +17,7 @@ fun NavGraphBuilder.shoppingListNavGraph(navController: NavController) {
 
         composable(route = "${PslScreens.ShoppingList.route}/{listId}",
             arguments = listOf(navArgument("listId") { type = NavType.LongType })) {
+            Timber.e("navigation")
             ShoppingListRoute(navController = navController as NavHostController)
         }
     }

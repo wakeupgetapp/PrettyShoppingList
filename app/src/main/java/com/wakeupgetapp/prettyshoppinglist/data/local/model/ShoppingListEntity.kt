@@ -8,5 +8,5 @@ data class ShoppingListEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
     val title: String = "",
-    val date: String = "",
+    val date: String = ""
 )

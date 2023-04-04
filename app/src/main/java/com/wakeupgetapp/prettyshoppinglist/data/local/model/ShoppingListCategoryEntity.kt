@@ -1,26 +1,23 @@
 package com.wakeupgetapp.prettyshoppinglist.data.local.model
 
-
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntryState
 
 @Entity(
-    tableName = "shoppingListEntry",
+    tableName = "shoppingListCategory",
     foreignKeys = [
         ForeignKey(
-            entity = ShoppingListCategoryEntity::class,
+            entity = ShoppingListEntity::class,
             parentColumns = ["id"],
-            childColumns = ["shoppingListCategoryId"],
+            childColumns = ["shoppingListId"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class ShoppingListEntryEntity(
+data class ShoppingListCategoryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
     val name: String = "",
-    val state: ShoppingListEntryState = ShoppingListEntryState.INITIAL,
-    val shoppingListCategoryId: Long = 0L
+    val shoppingListId: Long = 0L
 )

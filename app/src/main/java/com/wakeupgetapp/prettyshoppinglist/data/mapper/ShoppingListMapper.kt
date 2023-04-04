@@ -1,10 +1,11 @@
 package com.wakeupgetapp.prettyshoppinglist.data.mapper
 
+import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListCategoryEntity
 import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListEntity
-import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListWithEntries
+import com.wakeupgetapp.prettyshoppinglist.data.local.model.ShoppingListEntryEntity
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
+import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListCategory
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
-import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntryState
 
 fun ShoppingListEntity.toShoppingList(): ShoppingList {
     return ShoppingList(
@@ -22,19 +23,36 @@ fun ShoppingList.toShoppingListEntity(): ShoppingListEntity {
     )
 }
 
-fun ShoppingListWithEntries.toDomainModel(): ShoppingList {
-    val entries = entriesList.map { entry ->
-        ShoppingListEntry(
-            id = entry.id,
-            category = entry.category,
-            name = entry.name,
-            state = ShoppingListEntryState.DONE//entry.state
-        )
-    }
-    return ShoppingList(
-        id = shoppingList.id,
-        title = shoppingList.title,
-        date = shoppingList.date,
-        entriesList = entries
+fun ShoppingListCategory.toShoppingListCategoryEntity(): ShoppingListCategoryEntity {
+    return ShoppingListCategoryEntity(
+        id = id,
+        name = name,
+        shoppingListId = shoppingListId
+    )
+}
+
+fun ShoppingListCategoryEntity.toShoppingListCategory(): ShoppingListCategory {
+    return ShoppingListCategory(
+        id = id,
+        name = name,
+        shoppingListId = shoppingListId
+    )
+}
+
+fun ShoppingListEntry.toShoppingListEntryEntity(): ShoppingListEntryEntity {
+    return ShoppingListEntryEntity(
+        id = id,
+        name = name,
+        state = state,
+        shoppingListCategoryId = shoppingListCategoryId
+    )
+}
+
+fun ShoppingListEntryEntity.toShoppingListEntry(): ShoppingListEntry {
+    return ShoppingListEntry(
+        id = id,
+        name = name,
+        state = state,
+        shoppingListCategoryId = shoppingListCategoryId
     )
 }

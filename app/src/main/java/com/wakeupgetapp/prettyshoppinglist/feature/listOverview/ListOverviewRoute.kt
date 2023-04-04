@@ -1,5 +1,6 @@
 package com.wakeupgetapp.prettyshoppinglist.feature.listOverview
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -20,7 +21,8 @@ fun ListOverviewRoute(
 ) {
     val listOverviewState by viewModel.listOverviewState.collectAsStateWithLifecycle()
     val chosenListId by viewModel.chosenListId.collectAsStateWithLifecycle(initialValue = -1L)
-    Timber.e(chosenListId.toString())
+
+    Log.e("CHOSEN LIST ID", chosenListId.toString())
 
     LaunchedEffect(key1 = chosenListId){
         if (chosenListId != -1L){

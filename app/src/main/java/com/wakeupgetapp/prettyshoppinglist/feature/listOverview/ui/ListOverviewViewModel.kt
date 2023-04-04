@@ -1,21 +1,23 @@
 package com.wakeupgetapp.prettyshoppinglist.feature.listOverview.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
 import com.wakeupgetapp.prettyshoppinglist.data.repository.ShoppingListRepository
+import com.wakeupgetapp.prettyshoppinglist.feature.listOverview.domain.CreateNewShoppingListUseCase
 import com.wakeupgetapp.prettyshoppinglist.feature.listOverview.domain.FetchListOfShoppingListsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
 @HiltViewModel
 class ListOverviewViewModel @Inject constructor(
     fetchListOfShoppingListsUseCase: FetchListOfShoppingListsUseCase,
-   // createNewShoppingListUseCase: CreateNewShoppingListUseCase,
-    private val repository: ShoppingListRepository
+    private val createNewShoppingListUseCase: CreateNewShoppingListUseCase
 ) : ViewModel() {
 
     val listOverviewState: StateFlow<ListOverviewState> = fetchListOfShoppingListsUseCase()
@@ -32,6 +34,7 @@ class ListOverviewViewModel @Inject constructor(
         get() = _chosenListId.asSharedFlow()
 
     fun setChosenListId(value: Long) {
+        Timber.tag("chosen val").e(value.toString())
         viewModelScope.launch {
             _chosenListId.emit(value)
         }
@@ -40,7 +43,7 @@ class ListOverviewViewModel @Inject constructor(
 
     fun createNewShoppingList() {
         viewModelScope.launch {
-            val newListId = repository.addShoppingList(ShoppingList())
+            val newListId = createNewShoppingListUseCase()
             setChosenListId(newListId)
         }
     }

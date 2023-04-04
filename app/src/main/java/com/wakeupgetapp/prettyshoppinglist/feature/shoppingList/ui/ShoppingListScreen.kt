@@ -1,5 +1,6 @@
 package com.wakeupgetapp.prettyshoppinglist.feature.shoppingList.ui
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,6 +17,7 @@ import com.wakeupgetapp.prettyshoppinglist.component.textField.ShoppingListTitle
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntryState
+import timber.log.Timber
 
 @Composable
 fun ShoppingListScreen(
@@ -75,27 +77,30 @@ fun ShoppingListColumn(
     updateShoppingListTitle: (String) -> Unit,
     updateShoppingListDate: (String) -> Unit,
     addNewEntry: (String, String) -> Unit
-){
-    val categorizedEntries = shoppingList.entriesList.groupBy { it.category }
-
-            LazyColumn {
-                categorizedEntries.forEach { (category, entries) ->
-                    stickyHeader {
-                        Text(
-                            text = category,
-                            style = MaterialTheme.typography.h6,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colors.secondary)
-                                .padding(16.dp)
-                        )
-                    }
-                    items(entries) { entry ->
-                        ShoppingListEntryRow(entry = entry)
-                    }
+) {
+    Log.e("SHOPPING LIST CATEGORIES" ,shoppingList.categories.toString())
+    Text(text = shoppingList.title)
+    LazyColumn {
+        shoppingList.categories.forEach { category ->
+            stickyHeader {
+                Text(
+                    text = category.name.ifBlank { "bez kategorii" },
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colors.secondary)
+                        .padding(16.dp)
+                )
+            }
+            items(category.entries) { entry ->
+                ShoppingListEntryRow(entry = entry)
+                Button(onClick = { addNewEntry("pomczke", category.name) }) {
 
                 }
             }
+
+        }
+    }
 }
 
 

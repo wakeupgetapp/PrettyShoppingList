@@ -19,7 +19,7 @@ fun ListOverviewItem(shoppingList: ShoppingList, onClick: (Long) -> Unit) {
             .padding(paddingSmall)
             .clickable { onClick(shoppingList.id) }
     ) {
-        TextTitle(text = shoppingList.title)
-        TextSubtitle(text = shoppingList.date)
+        TextTitle(text = shoppingList.title.ifBlank { "brak nazwy" })
+        TextSubtitle(text = shoppingList.date.ifBlank { "brak daty" })
     }
 }

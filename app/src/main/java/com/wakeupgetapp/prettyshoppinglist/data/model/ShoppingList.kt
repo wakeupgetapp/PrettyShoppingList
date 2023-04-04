@@ -4,5 +4,5 @@ data class ShoppingList(
     val id: Long = 0L,
     val title: String = "",
     val date: String = "",
-    val entriesList: List<ShoppingListEntry> = emptyList()
+    val categories: List<ShoppingListCategory> = emptyList()
 )
