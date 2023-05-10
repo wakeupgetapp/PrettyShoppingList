@@ -14,7 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wakeupgetapp.prettyshoppinglist.R
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntry
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingListEntryState
@@ -62,7 +65,7 @@ fun ShoppingListColumn(
         shoppingList.categories.forEach { category ->
             stickyHeader {
                 Text(
-                    text = category.name.ifBlank { "bez kategorii" },
+                    text = category.name.ifBlank { stringResource(R.string.no_category) },
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -75,16 +78,21 @@ fun ShoppingListColumn(
 
             }
             item {
-                Button(onClick = { addNewEntry("pomczek", category.id) }) {
-                    Text(text = "AMENO")
+                Button(onClick = { addNewEntry("NewItem", category.id) }) {
+                    Text(text = "NewItem")
                 }
             }
         }
 
     }
-    Button(onClick = { addNewCategory("Tomek") }) {
-        Text(text = "nowa kategoria yeye")
+    Button(onClick = { addNewCategory("Category") }) {
+        Text(text = "add new category")
     }
+}
+
+@Composable
+fun ShoppingListCategoryColumn(){
+
 }
 
 
@@ -108,3 +116,23 @@ fun ShoppingListEntryRow(entry: ShoppingListEntry) {
         }
     }
 }
+
+
+@Preview
+@Composable
+private fun ShoppingListColumnPreview(){
+    Column() {
+        ShoppingListColumn(
+            shoppingList = ShoppingList(),
+            updateShoppingListTitle = {},
+            updateShoppingListDate = {},
+            addNewEntry = { _: String, _: Long -> },
+            addNewCategory = {}
+        )
+    }
+}
+
+//TODO(add bottom navigation
+// navigation should include "HOME -> list of shoppingLists",
+// "SETTINGS -> user can modify add they own category",
+// "ACCOUNT -> user can share their shopping list and get shopping list someone else send him")

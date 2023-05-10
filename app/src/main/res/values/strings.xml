@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PrettyShoppingList</string>
+    <string name="shopping_list_overview_title">Your shopping lists</string>
+    <string name="enter_list_title">Enter list title</string>
+    <string name="no_title">No title</string>
+    <string name="no_date">No date</string>
+    <string name="no_category">No category</string>
+    <string name="add_new_shopping_list">Add new shopping list</string>
+</resources>

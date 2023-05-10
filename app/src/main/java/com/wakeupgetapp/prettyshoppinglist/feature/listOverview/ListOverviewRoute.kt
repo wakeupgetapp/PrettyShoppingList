@@ -36,8 +36,9 @@ fun ListOverviewRoute(
         is Success ->
             ListOverviewScreen(
                 shoppingList = (listOverviewState as Success).list,
-                onShoppingListItemClick = { id -> viewModel.setChosenListId(id) }
-            ) { viewModel.createNewShoppingList() }
+                onShoppingListItemClick = { id -> viewModel.setChosenListId(id) },
+                onAddNewClick = { viewModel.createNewShoppingList() }
+            )
     }
 
 }

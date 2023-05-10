@@ -4,22 +4,31 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.wakeupgetapp.prettyshoppinglist.component.text.TextSubtitle
-import com.wakeupgetapp.prettyshoppinglist.component.text.TextTitle
+import androidx.compose.ui.res.stringResource
+import com.wakeupgetapp.prettyshoppinglist.R
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
 import com.wakeupgetapp.prettyshoppinglist.ui.theme.Dimens.paddingSmall
+import com.wakeupgetapp.prettyshoppinglist.ui.theme.Typography
 
 @Composable
 fun ListOverviewItem(shoppingList: ShoppingList, onClick: (Long) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(paddingSmall)
             .clickable { onClick(shoppingList.id) }
+            .padding(paddingSmall)
     ) {
-        TextTitle(text = shoppingList.title.ifBlank { "brak nazwy" })
-        TextSubtitle(text = shoppingList.date.ifBlank { "brak daty" })
+        Text(
+            text = shoppingList.title.ifBlank { stringResource(id = R.string.no_title) },
+            style = Typography.titleMedium,
+        )
+        Text(
+            text = shoppingList.date.ifBlank { stringResource(id = R.string.no_date) },
+            style = Typography.titleSmall,
+        )
+
     }
 }

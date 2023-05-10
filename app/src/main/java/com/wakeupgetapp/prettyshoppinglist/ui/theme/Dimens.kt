@@ -3,6 +3,7 @@ package com.wakeupgetapp.prettyshoppinglist.ui.theme
 import androidx.compose.ui.unit.dp
 
 object Dimens {
+    val dividerSmall = 1.dp
     val paddingExtraSmall = 4.dp
     val paddingSmall = 8.dp
     val paddingMedium = 16.dp
