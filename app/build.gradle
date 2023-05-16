@@ -30,6 +30,8 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_9
         targetCompatibility JavaVersion.VERSION_1_9
     }
@@ -84,6 +86,13 @@ dependencies {
 
     //Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    //Date wheel spinner
+    implementation "com.github.commandiron:WheelPickerCompose:$compose_wheel_spinner_version"
+
+
+    //Desugaring
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugaring_version"
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.0'

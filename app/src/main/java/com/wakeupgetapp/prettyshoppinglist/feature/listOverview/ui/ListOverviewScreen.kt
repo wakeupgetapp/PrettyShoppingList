@@ -15,24 +15,38 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.wakeupgetapp.prettyshoppinglist.R
 import com.wakeupgetapp.prettyshoppinglist.component.clickable.ListOverviewItem
+import com.wakeupgetapp.prettyshoppinglist.component.dialog.AddShoppingListDialog
 import com.wakeupgetapp.prettyshoppinglist.data.model.ShoppingList
 import com.wakeupgetapp.prettyshoppinglist.ui.theme.Dimens
 import com.wakeupgetapp.prettyshoppinglist.ui.theme.Dimens.paddingMedium
 import com.wakeupgetapp.prettyshoppinglist.ui.theme.Dimens.paddingSmall
 import com.wakeupgetapp.prettyshoppinglist.ui.theme.Typography
+import java.time.LocalDate
 
 @Composable
 fun ListOverviewScreen(
     shoppingList: List<ShoppingList>,
     onShoppingListItemClick: (Long) -> Unit,
-    onAddNewClick: () -> Unit
+    onAddNewClick: (String, LocalDate) -> Unit
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+    if (showDialog) {
+        AddShoppingListDialog(
+            onAddShoppingList = { title, date ->
+                onAddNewClick(title, date)
+            },
+            onDismiss = { showDialog = false }
+        )
+    }
+
     Scaffold(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -40,7 +54,7 @@ fun ListOverviewScreen(
         topBar = { ListOverviewTopBar() },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { onAddNewClick() },
+                onClick = { showDialog = true },
                 containerColor = MaterialTheme.colorScheme.secondary
             ) {
                 Icon(

@@ -26,7 +26,7 @@ fun ListOverviewItem(shoppingList: ShoppingList, onClick: (Long) -> Unit) {
             style = Typography.titleMedium,
         )
         Text(
-            text = shoppingList.date.ifBlank { stringResource(id = R.string.no_date) },
+            text = shoppingList.date.toString().ifBlank { stringResource(id = R.string.no_date) },
             style = Typography.titleSmall,
         )
 

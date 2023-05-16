@@ -6,4 +6,8 @@
     <string name="no_date">No date</string>
     <string name="no_category">No category</string>
     <string name="add_new_shopping_list">Add new shopping list</string>
+    <string name="add_shopping_list">Add shopping list</string>
+    <string name="name">Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
 </resources>

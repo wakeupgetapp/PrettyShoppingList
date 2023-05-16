@@ -13,6 +13,7 @@ import com.wakeupgetapp.prettyshoppinglist.feature.listOverview.ui.ListOverviewS
 import com.wakeupgetapp.prettyshoppinglist.feature.listOverview.ui.ListOverviewViewModel
 import com.wakeupgetapp.prettyshoppinglist.navigation.PslScreens
 import timber.log.Timber
+import java.time.LocalDate
 
 @Composable
 fun ListOverviewRoute(
@@ -37,7 +38,7 @@ fun ListOverviewRoute(
             ListOverviewScreen(
                 shoppingList = (listOverviewState as Success).list,
                 onShoppingListItemClick = { id -> viewModel.setChosenListId(id) },
-                onAddNewClick = { viewModel.createNewShoppingList() }
+                onAddNewClick = { name: String, date: LocalDate -> viewModel.createNewShoppingList(name, date) }
             )
     }
 

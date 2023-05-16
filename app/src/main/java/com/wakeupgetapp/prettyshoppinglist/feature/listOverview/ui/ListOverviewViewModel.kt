@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.LocalDate
 import javax.inject.Inject
 
 
@@ -34,16 +35,15 @@ class ListOverviewViewModel @Inject constructor(
         get() = _chosenListId.asSharedFlow()
 
     fun setChosenListId(value: Long) {
-        Timber.tag("chosen val").e(value.toString())
         viewModelScope.launch {
             _chosenListId.emit(value)
         }
     }
 
 
-    fun createNewShoppingList() {
+    fun createNewShoppingList(name: String, date: LocalDate) {
         viewModelScope.launch {
-            val newListId = createNewShoppingListUseCase()
+            val newListId = createNewShoppingListUseCase(name, date)
             setChosenListId(newListId)
         }
     }
